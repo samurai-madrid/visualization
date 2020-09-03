@@ -16,6 +16,7 @@ NUM_POINTS = 100
 MAPBOX_TOKEN="pk.eyJ1IjoiZWJhc2FuZXoiLCJhIjoiY2thdmZqcnh3MWNwOTMxbXM3eDZncDlqeiJ9.BT3UQJ9yJ2eSiaSRu-RsJw"
 
 st.title("SAMUR.AI\nSimulation Interactive Visualizaton Tool")
+st.set_option('deprecation.showfileUploaderEncoding', False)
 
 @st.cache
 def getEmergenciesData():
@@ -33,7 +34,7 @@ def getEvents(string_io, hospitals_data):
 	return eventGenerator.getEventsFromLogFile(string_io.getvalue(), hospitals_data)
 
 def getSimulationStringIO():
-	uploaded_string_io = st.sidebar.file_uploader("Choose a simulation log file", type=['log'])
+	uploaded_string_io = st.sidebar.file_uploader("Choose a simulation log file", type = ['log'], encoding = "utf-8")
 	if uploaded_string_io is not None:
 		return uploaded_string_io
 
