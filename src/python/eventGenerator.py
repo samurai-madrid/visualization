@@ -9,6 +9,9 @@ LONGITUDE_KM_PER_DEG = 111.320
 KM0_LATITUDE = 40.4146500
 KM0_LONGITUDE = -3.7004000
 
+AM_LINE_EM_ID_INDEX = -1
+
+
 def coordinatesToKm0(latitude, longitude):		
 	x = np.round(np.cos(KM0_LATITUDE/180 * np.pi) * (longitude - KM0_LONGITUDE) * LONGITUDE_KM_PER_DEG, 9)
 	y = np.round((latitude - KM0_LATITUDE) * LATITUDE_1DEG_KM, 9)
@@ -24,7 +27,6 @@ def lonTransform(kim_lon):
 
 def coordinateTransform(tuple):
     return (latTransform(tuple[0]), lonTransform(tuple[1]))
-
 
 
 def getHospitalCoordinates(hospitals_data, value):
@@ -46,20 +48,20 @@ def getAmbulanceEvents(items,emergency_dict, hospital_data):
         items[5], '%Y-%m-%dT%H:%M:%S.%f').timestamp() * 1000
     amb_tohostime = datetime.datetime.strptime(
         items[6], '%Y-%m-%dT%H:%M:%S.%f').timestamp() * 1000
-    coord_tuple = coordinateTransform(emergency_dict[int(items[2])][int(items[8])])
+    coord_tuple = coordinateTransform(emergency_dict[int(items[2])][int(items[AM_LINE_EM_ID_INDEX])])
     origin_hosp_coord = getHospitalCoordinates(hospital_data,items[3])
     dest_hosp_coord = getHospitalCoordinates(hospital_data,items[4])
     temp = []
     temp.append(ambulanceEvent(amb_otime, 'ADD',
-                               items[2], items[8], origin_hosp_coord[0], origin_hosp_coord[1], coord_tuple[0], coord_tuple[1]))
+                               items[2], items[AM_LINE_EM_ID_INDEX], origin_hosp_coord[0], origin_hosp_coord[1], coord_tuple[0], coord_tuple[1]))
     temp.append(ambulanceEvent(amb_toobtime, 'REMOVE',
-                               items[2], items[8], origin_hosp_coord[0], origin_hosp_coord[1], coord_tuple[0], coord_tuple[1]))
+                               items[2], items[AM_LINE_EM_ID_INDEX], origin_hosp_coord[0], origin_hosp_coord[1], coord_tuple[0], coord_tuple[1]))
     temp.append(emergencyEvent(amb_toobtime, 'REMOVE',
-                               items[2], items[8], coord_tuple[0], coord_tuple[1]))
+                               items[2], items[AM_LINE_EM_ID_INDEX], coord_tuple[0], coord_tuple[1]))
     temp.append(ambulanceEvent(amb_toobtime, 'ADD',
-                               items[2], items[8], coord_tuple[0], coord_tuple[1], dest_hosp_coord[0], dest_hosp_coord[1]))
+                               items[2], items[AM_LINE_EM_ID_INDEX], coord_tuple[0], coord_tuple[1], dest_hosp_coord[0], dest_hosp_coord[1]))
     temp.append(ambulanceEvent(amb_tohostime, 'REMOVE',
-                               items[2], items[8], coord_tuple[0], coord_tuple[1], dest_hosp_coord[0], dest_hosp_coord[1]))
+                               items[2], items[AM_LINE_EM_ID_INDEX], coord_tuple[0], coord_tuple[1], dest_hosp_coord[0], dest_hosp_coord[1]))
     return temp
 
 
@@ -81,9 +83,9 @@ def getMoveEvents(items, hospitals_data):
     dest_hosp_coord = getHospitalCoordinates(hospitals_data, items[4])
     temp = []
     temp.append(ambulanceEvent(amb_otime, 'ADD',
-                               items[2], items[8], origin_hosp_coord[0], origin_hosp_coord[1], dest_hosp_coord[0], dest_hosp_coord[1]))
+                               items[2], items[AM_LINE_EM_ID_INDEX], origin_hosp_coord[0], origin_hosp_coord[1], dest_hosp_coord[0], dest_hosp_coord[1]))
     temp.append(ambulanceEvent(amb_tohostime, 'REMOVE',
-                               items[2], items[8], origin_hosp_coord[0], origin_hosp_coord[1], dest_hosp_coord[0], dest_hosp_coord[1]))
+                               items[2], items[AM_LINE_EM_ID_INDEX], origin_hosp_coord[0], origin_hosp_coord[1], dest_hosp_coord[0], dest_hosp_coord[1]))
     return temp
 #AM [timeISO] [severity] [hosp_origin] [hosp_destination] [tobjective] [thospital] [reward] [em_identifier]
 

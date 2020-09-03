@@ -6,7 +6,7 @@ Single page application for visualization of environment and agent actions of SA
 
 # Usage
 >> pip install streamlit
->> streamlit run visualization.py --server.port=80
+>> streamlit run visualization.py
 - Upload simulation LOG and choose visualization options
 
 # License
