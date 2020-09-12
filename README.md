@@ -2,11 +2,13 @@
 Single page application for visualization of environment and agent actions of SAMUR.AI reinforced learning architecture.
 
 # Prerequisites
-- [Python 3.X:X](https://www.python.org/downloads/)
+- [Python 3.X.X](https://www.python.org/downloads/)
 
 # Usage
 >> pip install streamlit
+
 >> streamlit run visualization.py
+
 - Upload simulation LOG and choose visualization options
 
 # License
