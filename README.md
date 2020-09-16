@@ -23,7 +23,7 @@ Single page application for visualization of environment and agent actions of SA
 - [Borja Menéndez Moreno](https://www.linkedin.com/in/borjamenendezmoreno)
 
 # External links
-- Article in Medium (TBD)
+- [Medium article] (https://medium.com/p/a128cd052c22)
 
 # Acknowledgments
 - [Saturdays AI](https://www.saturdays.ai/) Madrid, for bringing us together. 
